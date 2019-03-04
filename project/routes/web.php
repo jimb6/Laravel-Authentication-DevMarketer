@@ -36,8 +36,9 @@ Route::prefix('teacher')->group( function (){
 
 Route::prefix('student')->group( function (){
     Route::get('/login', 'Auth\LoginController@showLoginForm')->name('student.login');
-    Route::post('/login', 'Auth\LoginController@login')->name('student.login.submit');
+    Route::post('/login', 'Auth\LoginController@userLogin')->name('student.login.submit');
     Route::get('/', 'HomeController@index')->name('student.dashboard');
     Route::get('/logout', 'Auth\LoginController@userLogout')->name('student.logout');
+    Route::get('/profile', 'HomeController@getProfile')->name('student.profile');
 });
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -19,14 +20,14 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+//    use AuthenticatesUsers;
 
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/student/home';
 
     /**
      * Create a new controller instance.
@@ -38,9 +39,29 @@ class LoginController extends Controller
         $this->middleware('guest', ['except'=>['logout', 'userLogout']]);
     }
 
+    public function showLoginForm(){
+        return view('auth.student-login');
+    }
+
     public function userLogout()
     {
         Auth::guard('web')->logout();
         return redirect(route('student.login'));
+    }
+
+    public function userLogin(Request $request){
+        //Validate Data
+        $this->validate($request, [
+            'username' => 'required|min:3',
+            'password'=>'required|min:5'
+        ]);
+
+        //Attempt to log user
+        if(Auth::guard('web')->attempt(['username' => $request->username, 'password' => $request->password], $request->remember)){
+            //if Successful, then redirect to its intended location
+            return redirect()->intended(route('student.dashboard'));
+        }
+
+        return redirect()->back()->withInput($request->only('username', 'remember'));
     }
 }
