@@ -11,7 +11,7 @@ class TeacherLoginController extends Controller
     //
     public function __construct()
     {
-        $this->middleware('guest:teacher', ['except'=>['logout']]);
+        $this->middleware('guest:teacher', ['except'=>['logout', 'userLogout']]);
     }
 
     public function showLoginForm(){

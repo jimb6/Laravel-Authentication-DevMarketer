@@ -31,6 +31,7 @@ Route::prefix('teacher')->group( function (){
     Route::post('/login', 'Auth\TeacherLoginController@login')->name('teacher.login.submit');
     Route::get('/', 'TeacherController@index')->name('teacher.dashboard');
     Route::get('/logout', 'Auth\TeacherLoginController@userLogout')->name('teacher.logout');
+    Route::get('/profile', 'TeacherController@getProfile')->name('teacher.profile');
 });
 
 
