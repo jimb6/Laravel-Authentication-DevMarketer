@@ -30,6 +30,7 @@ class CreateTeachersTable extends Migration
             $table->string('municipality');
             $table->string('province');
             $table->string('contact');
+            $table->rememberToken();
         });
     }
 

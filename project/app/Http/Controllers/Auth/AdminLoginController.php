@@ -13,12 +13,13 @@ class AdminLoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest:admin');
+        $this->middleware('guest:admin', ['except'=>['logout', 'userLogout']]);
     }
 
     public function showLoginForm(){
         return view('auth.admin-login');
     }
+
 
     public function login(Request $request){
         //Validate Data
@@ -34,5 +35,11 @@ class AdminLoginController extends Controller
             }
 
         return redirect()->back()->withInput($request->only('username', 'remember'));
+    }
+
+    public function userLogout()
+    {
+        Auth::guard('admin')->logout();
+        return redirect(route('admin.login'));
     }
 }

@@ -34,6 +34,7 @@ class CreateStudentsTable extends Migration
             $table->string('guardian_id');
             $table->string('guardian_rel');
             $table->string('guardian_contact');
+            $table->rememberToken();
         });
     }
 
